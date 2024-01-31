@@ -679,3 +679,14 @@ config ARMSSE
     select UNIMP
     select SSE_COUNTER
     select SSE_TIMER
+
+config S5L8950
+    bool
+    default y
+    depends on TCG && ARM
+
+config IPHONE_N42AP
+    bool
+    default y
+    depends on TCG && ARM
+    select S5L8950
