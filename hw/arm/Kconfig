@@ -680,7 +680,7 @@ config ARMSSE
     select SSE_COUNTER
     select SSE_TIMER
 
-config S5L8950
+config S5L8950X
     bool
     default y
     depends on TCG && ARM
@@ -689,4 +689,4 @@ config IPHONE_N42AP
     bool
     default y
     depends on TCG && ARM
-    select S5L8950
+    select S5L8950X

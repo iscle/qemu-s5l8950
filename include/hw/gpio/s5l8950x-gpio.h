@@ -1,5 +1,5 @@
 /*
- * Apple A6 (S5L8950) chip ID emulation
+ * Apple A6 (S5L8950X) GPIO emulation
  *
  * Copyright (C) 2024 Iscle <albertiscle9@gmail.com>
  *
@@ -7,16 +7,16 @@
  * See the COPYING file in the top-level directory.
  */
 
-#ifndef HW_MISC_S5L8950_CHIPID_H
-#define HW_MISC_S5L8950_CHIPID_H
+#ifndef HW_MISC_S5L8950X_GPIO_H
+#define HW_MISC_S5L8950X_GPIO_H
 
 #include "hw/sysbus.h"
 #include "qom/object.h"
 
-#define TYPE_S5L8950_CHIPID   "s5l8950-chipid"
-OBJECT_DECLARE_SIMPLE_TYPE(S5L8950ChipIdState, S5L8950_CHIPID)
+#define TYPE_S5L8950X_GPIO   "s5l8950-gpio"
+OBJECT_DECLARE_SIMPLE_TYPE(S5L8950XGpioState, S5L8950X_GPIO)
 
-struct S5L8950ChipIdState {
+struct S5L8950XGpioState {
     /*< private >*/
     SysBusDevice parent_obj;
 
@@ -24,4 +24,4 @@ struct S5L8950ChipIdState {
     MemoryRegion iomem;
 };
 
-#endif /* HW_MISC_S5L8950_CHIPID_H */
+#endif /* HW_MISC_S5L8950X_GPIO_H */

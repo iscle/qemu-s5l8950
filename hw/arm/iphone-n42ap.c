@@ -12,7 +12,7 @@
 #include "qemu/cutils.h"
 #include "qapi/error.h"
 #include "hw/arm/boot.h"
-#include "hw/arm/s5l8950.h"
+#include "hw/arm/s5l8950x.h"
 #include "hw/registerfields.h"
 #include "qemu/error-report.h"
 #include "hw/boards.h"
@@ -25,7 +25,7 @@ struct IphoneMachineState {
     MachineState parent_obj;
 
     /*< public >*/
-    S5L8950State soc;
+    S5L8950XState soc;
     struct arm_boot_info binfo;
 };
 typedef struct IphoneMachineState IphoneMachineState;
@@ -49,14 +49,14 @@ static void setup_boot(MachineState *machine, size_t ram_size)
     s->binfo.ram_size = ram_size;
 
     /* SDRAM */
-    memory_region_add_subregion(get_system_memory(), s->soc.memmap[S5L8950_DEV_SDRAM], machine->ram);
+    memory_region_add_subregion(get_system_memory(), s->soc.memmap[S5L8950X_DEV_SDRAM], machine->ram);
 
     /* If the user specified a "firmware" image (e.g. BootROM), we bypass
      * the normal Linux boot process
      */
     if (machine->firmware) {
         printf("Loading firmware... File: %s\n", machine->firmware);
-        hwaddr firmware_addr = s->soc.memmap[S5L8950_DEV_SRAM];
+        hwaddr firmware_addr = s->soc.memmap[S5L8950X_DEV_SRAM];
         /* load the firmware image */
         r = load_image_targphys(machine->firmware, firmware_addr, 64 * KiB);
         if (r < 0) {
@@ -87,7 +87,7 @@ static void iphone_machine_init(MachineState *machine)
     }
 
     /* SOC */
-    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_S5L8950);
+    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_S5L8950X);
     qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
 
     setup_boot(machine, machine->ram_size);

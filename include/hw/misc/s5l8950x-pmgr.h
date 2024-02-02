@@ -1,5 +1,5 @@
 /*
- * Apple A6 (S5L8950) GPIO emulation
+ * Apple A6 (S5L8950X) Power Management emulation
  *
  * Copyright (C) 2024 Iscle <albertiscle9@gmail.com>
  *
@@ -7,16 +7,16 @@
  * See the COPYING file in the top-level directory.
  */
 
-#ifndef HW_MISC_S5L8950_GPIO_H
-#define HW_MISC_S5L8950_GPIO_H
+#ifndef HW_MISC_S5L8950X_PMGR_H
+#define HW_MISC_S5L8950X_PMGR_H
 
 #include "hw/sysbus.h"
 #include "qom/object.h"
 
-#define TYPE_S5L8950_GPIO   "s5l8950-gpio"
-OBJECT_DECLARE_SIMPLE_TYPE(S5L8950GpioState, S5L8950_GPIO)
+#define TYPE_S5L8950X_PMGR   "s5l8950-pmgr"
+OBJECT_DECLARE_SIMPLE_TYPE(S5L8950XPmgrState, S5L8950X_PMGR)
 
-struct S5L8950GpioState {
+struct S5L8950XPmgrState {
     /*< private >*/
     SysBusDevice parent_obj;
 
@@ -24,4 +24,4 @@ struct S5L8950GpioState {
     MemoryRegion iomem;
 };
 
-#endif /* HW_MISC_S5L8950_GPIO_H */
+#endif /* HW_MISC_S5L8950X_PMGR_H */
