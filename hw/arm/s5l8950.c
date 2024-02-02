@@ -100,7 +100,75 @@ static struct {
     hwaddr base;
     hwaddr size;
 } unimplemented[] = {
-    { "unk_peripheral",   0, 0x80000000 },
+        { "unk_peripheral",   0, 0x80000000 },
+        { "sdio", 0x30000000, 0x01000000 },
+        { "sha1", 0x30100000, 0x00100000 },
+        { "sha2", 0x30200000, 0x00100000 },
+        { "nand_dll", 0x31000000, 0x00100000 },
+        { "fmi0", 0x31200000, 0x00100000 },
+        { "fmi1", 0x31300000, 0x00100000 },
+        { "spi0", 0x32000000, 0x00100000 },
+        { "spi1", 0x32100000, 0x00100000 },
+        { "spi2", 0x32200000, 0x00100000 },
+        { "spi3", 0x32300000, 0x00100000 },
+        { "spi4", 0x32400000, 0x00100000 },
+        { "uart0", 0x32500000, 0x00100000 },
+        { "uart1", 0x32600000, 0x00100000 },
+        { "uart2", 0x32700000, 0x00100000 },
+        { "uart3", 0x32800000, 0x00100000 },
+        { "uart4", 0x32900000, 0x00100000 },
+        { "uart5", 0x32A00000, 0x00100000 },
+        { "uart6", 0x32B00000, 0x00100000 },
+        { "pke", 0x33100000, 0x00100000 },
+        { "iic", 0x33200000, 0x00100000 },
+        { "audio", 0x34000000, 0x00100000 },
+        { "usbphy", 0x36000000, 0x00100000 },
+        { "usbotg", 0x36100000, 0x00100000 },
+        { "uperf_widgets", 0x36E00000, 0x00100000 },
+        { "uperf_pl301", 0x36F00000, 0x00100000 },
+        { "cdma", 0x37000000, 0x00100000 },
+        { "venc", 0x38000000, 0x00100000 },
+        { "vdec", 0x38100000, 0x00100000 },
+        { "jpeg0", 0x38200000, 0x00100000 },
+        { "scaler", 0x38300000, 0x00100000 },
+        { "jpeg1", 0x38500000, 0x00100000 },
+        { "nrt_dart", 0x38B00000, 0x00100000 },
+        { "nrt_dart_widgets", 0x38C00000, 0x00100000 },
+        { "nrt_dart_pl301", 0x38D00000, 0x00100000 },
+        { "nrt_top_widgets", 0x38E00000, 0x00100000 },
+        { "nrt_top_pl301", 0x38F00000, 0x00100000 },
+        { "clcd", 0x39200000, 0x00100000 },
+        { "dither0", 0x39300000, 0x00100000 },
+        { "tvout", 0x39400000, 0x00100000 },
+        { "dsim", 0x39500000, 0x00100000 },
+        { "rgbout", 0x39600000, 0x00100000 },
+        { "dp", 0x39700000, 0x00100000 },
+        { "dither1", 0x39800000, 0x00100000 },
+        { "lpdp", 0x39900000, 0x00100000 },
+        { "isp", 0x3A000000, 0x00100000 },
+        { "disp0", 0x3A100000, 0x00100000 },
+        { "disp1", 0x3A200000, 0x00100000 },
+        { "rt_dart", 0x3A400000, 0x00100000 },
+        { "rt_top_widgets", 0x3A500000, 0x00100000 },
+        { "rt_top_pl301", 0x3A600000, 0x00100000 },
+        { "adsp", 0x3B000000, 0x00100000 },
+        { "amp", 0x3D000000, 0x00100000 },
+        { "scc", 0x3D200000, 0x00100000 },
+        { "vrom", 0x3F000000, 0x00010000 },
+        { "pmgr", 0x3F100000, 0x00100000 },
+        { "aic", 0x3F200000, 0x00100000 },
+        { "iop", 0x3F300000, 0x00100000 },
+        { "rosc", 0x3F400000, 0x00100000 },
+        { "chipid", 0x3F500000, 0x00100000 },
+        { "swi", 0x3F600000, 0x00100000 },
+        { "dwi", 0x3F700000, 0x00100000 },
+        { "amc", 0x3F800000, 0x00100000 },
+        { "gpio", 0x3FA00000, 0x00100000 },
+        { "pio", 0x3FB00000, 0x00100000 },
+        { "cim", 0x3FD00000, 0x00100000 },
+        { "cdio_widgets", 0x3FE00000, 0x00100000 },
+        { "cdio_pl301", 0x3FF00000, 0x00100000 },
+        { "sdram", 0x80000000, 0x40000000 },
 };
 
 static void s5l8950_init(Object *obj)
@@ -113,7 +181,13 @@ static void s5l8950_init(Object *obj)
         object_initialize_child(obj, "cpu[*]", &s->cpu[i], ARM_CPU_TYPE_NAME("cortex-a15"));
     }
 
+    object_initialize_child(obj, "aic", &s->aic, TYPE_S5L8950_AIC);
+    for (int i = 0; i < S5L8950_NUM_SPI; i++) {
+        object_initialize_child(obj, "spi[*]", &s->spi[i], TYPE_S5L8950_SPI);
+    }
+    object_initialize_child(obj, "gpio", &s->gpio, TYPE_S5L8950_GPIO);
     object_initialize_child(obj, "pmgr", &s->pmgr, TYPE_S5L8950_PMGR);
+    object_initialize_child(obj, "chipid", &s->chipid, TYPE_S5L8950_CHIPID);
 }
 
 static void s5l8950_realize(DeviceState *dev, Error **errp)
@@ -149,9 +223,27 @@ static void s5l8950_realize(DeviceState *dev, Error **errp)
     memory_region_init_rom(&s->sram_vrom, OBJECT(dev), "sram_vrom", 0x00010000, &error_abort);
     memory_region_add_subregion(get_system_memory(), s->memmap[S5L8950_DEV_VROM], &s->sram_vrom);
 
+    /* AIC */
+    sysbus_realize(SYS_BUS_DEVICE(&s->aic), &error_fatal);
+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->aic), 0, s->memmap[S5L8950_DEV_AIC]);
+
+    /* SPI */
+    for (i = 0; i < S5L8950_NUM_SPI; i++) {
+        sysbus_realize(SYS_BUS_DEVICE(&s->spi[i]), &error_fatal);
+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->spi[i]), 0, s->memmap[S5L8950_DEV_SPI0 + i]);
+    }
+
+    /* GPIO */
+    sysbus_realize(SYS_BUS_DEVICE(&s->gpio), &error_fatal);
+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio), 0, s->memmap[S5L8950_DEV_GPIO]);
+
     /* PMGR */
     sysbus_realize(SYS_BUS_DEVICE(&s->pmgr), &error_fatal);
     sysbus_mmio_map(SYS_BUS_DEVICE(&s->pmgr), 0, s->memmap[S5L8950_DEV_PMGR]);
+
+    /* Chip ID */
+    sysbus_realize(SYS_BUS_DEVICE(&s->chipid), &error_fatal);
+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->chipid), 0, s->memmap[S5L8950_DEV_CHIPID]);
 
     /* Unimplemented devices */
     for (i = 0; i < ARRAY_SIZE(unimplemented); i++) {

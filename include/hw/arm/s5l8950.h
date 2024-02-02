@@ -13,8 +13,12 @@
 #include "qom/object.h"
 #include "target/arm/cpu.h"
 #include "hw/intc/arm_gic.h"
+#include "hw/ssi/s5l8950-spi.h"
+#include "hw/intc/s5l8950-aic.h"
+#include "hw/gpio/s5l8950-gpio.h"
 #include "hw/misc/s5l8950-pmgr.h"
 #include "sysemu/block-backend.h"
+#include "hw/misc/s5l8950-chipid.h"
 
 /**
  * S5L8950 device list
@@ -101,6 +105,15 @@ enum {
 /** Total number of CPU cores in the S5L8950 SoC */
 #define S5L8950_NUM_CPUS    (2)
 
+/** Total number of SPI controllers in the S5L8950 SoC */
+#define S5L8950_NUM_SPI     (5)
+
+/** Total number of UART controllers in the S5L8950 SoC */
+#define S5L8950_NUM_UART    (7)
+
+/** Total number of I2C controllers in the S5L8950 SoC */
+#define S5L8950_NUM_I2C     (3)
+
 /**
  * S5L8950 object model
  * @{
@@ -130,7 +143,13 @@ struct S5L8950State {
     MemoryRegion sram;
     MemoryRegion sram_alias;
     MemoryRegion sram_vrom;
+    S5L8950AicState aic;
+    S5L8950SpiState spi[S5L8950_NUM_SPI];
+//    S5L8950UartState uart[S5L8950_NUM_UART];
+//    S5L8950I2cState i2c[S5L8950_NUM_I2C];
+    S5L8950GpioState gpio;
     S5L8950PmgrState pmgr;
+    S5L8950ChipIdState chipid;
 };
 
 #endif /* HW_ARM_S5L8950_H */

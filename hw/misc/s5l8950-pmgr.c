@@ -14,6 +14,22 @@
 #include "migration/vmstate.h"
 #include "sysemu/runstate.h"
 
+#define	rPMGR_PLL_CTL0(_n)  (0x0000 + ((_n) * 0x18))
+#define	PMGR_PLL_ENABLE     (1 << 31)
+#define	PMGR_PLL_EXT_BYPASS (1 << 30)
+#define	PMGR_PLL_REAL_LOCK  (1 << 29)
+#define	PMGR_PLL_LOAD       (1 << 27)
+#define	PMGR_PLL_BYPASS     (1 << 23)
+
+#define	rPMGR_PLL_DEBUG(_n)         (0x2010 + ((_n) * 4))
+#define PMGR_PLL_DEBUG_BYP_ENABLED  (1 << 30)
+
+#define	rPMGR_DOUBLER_DEBUG             (0x2034)
+#define PMGR_DOUBLER_DEBUG_ENABLED      (1 << 31)
+#define PMGR_DOUBLER_DEBUG_BYP_ENABLED  (1 << 30)
+
+#define	rPMGR_SCRATCH0  (0x6000)
+
 static uint64_t s5l8950_pmgr_read(void *opaque, hwaddr offset,
                                       unsigned size)
 {
@@ -21,6 +37,25 @@ static uint64_t s5l8950_pmgr_read(void *opaque, hwaddr offset,
     uint32_t res = 0;
 
     switch (offset) {
+    case rPMGR_PLL_CTL0(4):
+        res = PMGR_PLL_REAL_LOCK;
+        break;
+    case rPMGR_PLL_DEBUG(2):
+    case rPMGR_PLL_DEBUG(3):
+    case rPMGR_PLL_DEBUG(4):
+    case rPMGR_PLL_DEBUG(5):
+    case rPMGR_PLL_DEBUG(6):
+    case rPMGR_PLL_DEBUG(7):
+    case rPMGR_PLL_DEBUG(8):
+        res = PMGR_PLL_DEBUG_BYP_ENABLED;
+        break;
+    case rPMGR_DOUBLER_DEBUG:
+        res = PMGR_DOUBLER_DEBUG_BYP_ENABLED;
+        break;
+    case rPMGR_SCRATCH0:
+        // boot_config_mask = 0xFF << 8
+        res = 4 << 8; // FMI0 2 CS (First NAND entry, might not be the one that the iPhone 5 uses)
+        break;
     default:
         qemu_log_mask(LOG_UNIMP, "s5l8950_pmgr_read: Unknown offset 0x%08"HWADDR_PRIx"\n", offset);
         res = 0;
