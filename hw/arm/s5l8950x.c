@@ -100,7 +100,7 @@ static struct {
     hwaddr base;
     hwaddr size;
 } unimplemented[] = {
-        { "unk_peripheral",   0, 0x80000000 },
+        { "unk_peripheral",   0, 0xFFFFFFFF },
         { "sdio", 0x30000000, 0x01000000 },
         { "sha1", 0x30100000, 0x00100000 },
         { "sha2", 0x30200000, 0x00100000 },
