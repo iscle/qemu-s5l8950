@@ -13,7 +13,7 @@
 #include "hw/sysbus.h"
 #include "qom/object.h"
 
-#define TYPE_S5L8950X_PMGR   "s5l8950-pmgr"
+#define TYPE_S5L8950X_PMGR   "s5l8950x-pmgr"
 OBJECT_DECLARE_SIMPLE_TYPE(S5L8950XPmgrState, S5L8950X_PMGR)
 
 struct S5L8950XPmgrState {

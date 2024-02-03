@@ -13,12 +13,12 @@
 #include "qom/object.h"
 #include "target/arm/cpu.h"
 #include "hw/intc/arm_gic.h"
-#include "hw/ssi/s5l8950-spi.h"
-#include "hw/intc/s5l8950-aic.h"
-#include "hw/gpio/s5l8950-gpio.h"
-#include "hw/misc/s5l8950-pmgr.h"
+#include "hw/ssi/s5l8950x-spi.h"
+#include "hw/intc/s5l8950x-aic.h"
+#include "hw/gpio/s5l8950x-gpio.h"
+#include "hw/misc/s5l8950x-pmgr.h"
 #include "sysemu/block-backend.h"
-#include "hw/misc/s5l8950-chipid.h"
+#include "hw/misc/s5l8950x-chipid.h"
 
 /**
  * S5L8950X device list
@@ -120,7 +120,7 @@ enum {
  */
 
 /** Object type for the S5L8950X SoC */
-#define TYPE_S5L8950X    "s5l8950"
+#define TYPE_S5L8950X    "s5l8950x"
 
 /** Convert input object to S5L8950X state object */
 OBJECT_DECLARE_SIMPLE_TYPE(S5L8950XState, S5L8950X)

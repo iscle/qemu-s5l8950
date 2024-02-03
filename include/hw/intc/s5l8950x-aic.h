@@ -13,7 +13,7 @@
 #include "hw/sysbus.h"
 #include "qom/object.h"
 
-#define TYPE_S5L8950X_AIC   "s5l8950-aic"
+#define TYPE_S5L8950X_AIC   "s5l8950x-aic"
 OBJECT_DECLARE_SIMPLE_TYPE(S5L8950XAicState, S5L8950X_AIC)
 
 struct S5L8950XAicState {

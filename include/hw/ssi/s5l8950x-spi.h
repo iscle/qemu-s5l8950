@@ -13,7 +13,7 @@
 #include "hw/sysbus.h"
 #include "qom/object.h"
 
-#define TYPE_S5L8950X_SPI   "s5l8950-spi"
+#define TYPE_S5L8950X_SPI   "s5l8950x-spi"
 OBJECT_DECLARE_SIMPLE_TYPE(S5L8950XSpiState, S5L8950X_SPI)
 
 struct S5L8950XSpiState {

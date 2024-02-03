@@ -13,7 +13,7 @@
 #include "hw/sysbus.h"
 #include "qom/object.h"
 
-#define TYPE_S5L8950X_CHIPID   "s5l8950-chipid"
+#define TYPE_S5L8950X_CHIPID   "s5l8950x-chipid"
 OBJECT_DECLARE_SIMPLE_TYPE(S5L8950XChipIdState, S5L8950X_CHIPID)
 
 struct S5L8950XChipIdState {

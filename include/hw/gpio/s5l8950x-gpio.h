@@ -13,7 +13,7 @@
 #include "hw/sysbus.h"
 #include "qom/object.h"
 
-#define TYPE_S5L8950X_GPIO   "s5l8950-gpio"
+#define TYPE_S5L8950X_GPIO   "s5l8950x-gpio"
 OBJECT_DECLARE_SIMPLE_TYPE(S5L8950XGpioState, S5L8950X_GPIO)
 
 struct S5L8950XGpioState {
