@@ -13,10 +13,16 @@
 #include "hw/intc/s5l8950x-aic.h"
 #include "migration/vmstate.h"
 #include "sysemu/runstate.h"
+#include "qemu/timer.h"
 
 // AIC_VERSION 1 for A6 (S5L8950X)
 #define rAIC_TIME_LO    (0x0020)
 #define rAIC_TIME_HI    (0x0028)
+
+static uint64_t get_current_time(void)
+{
+    return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+}
 
 static uint64_t s5l8950x_aic_read(void *opaque, hwaddr offset,
                                       unsigned size)
@@ -26,12 +32,12 @@ static uint64_t s5l8950x_aic_read(void *opaque, hwaddr offset,
 
     switch (offset) {
     case rAIC_TIME_LO:
-        res = s->time_lo;
-        if (s->time_lo == 0) {
-            s->time_lo = 0x8FFFFFFF;
-        } else {
-            s->time_lo = 0;
-        }
+        uint32_t time_lo = get_current_time() & 0xFFFFFFFF;
+        res = time_lo;
+        break;
+    case rAIC_TIME_HI:
+        uint32_t time_hi = (get_current_time() >> 32) & 0xFFFFFFFF;
+        res = time_hi;
         break;
     default:
         qemu_log_mask(LOG_UNIMP, "s5l8950x_aic_read: Unknown offset 0x%08"HWADDR_PRIx"\n", offset);
