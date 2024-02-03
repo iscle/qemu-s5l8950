@@ -220,7 +220,7 @@ static void s5l8950x_realize(DeviceState *dev, Error **errp)
     memory_region_init_rom(&s->vrom, OBJECT(dev), "vrom", 0x00010000, &error_abort);
     memory_region_add_subregion(get_system_memory(), s->memmap[S5L8950X_DEV_VROM], &s->vrom);
 
-    memory_region_init_alias(&s->vrom_alias, OBJECT(dev), "vram_alias", &s->vrom, 0, 0x00010000);
+    memory_region_init_alias(&s->vrom_alias, OBJECT(dev), "vrom_alias", &s->vrom, 0, 0x00010000);
     memory_region_add_subregion(get_system_memory(), 0x0, &s->vrom_alias);
 
     /* AIC */
