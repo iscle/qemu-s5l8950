@@ -141,8 +141,8 @@ struct S5L8950XState {
     ARMCPU cpu[S5L8950X_NUM_CPUS];
     const hwaddr *memmap;
     MemoryRegion sram;
-    MemoryRegion sram_alias;
-    MemoryRegion sram_vrom;
+    MemoryRegion vrom;
+    MemoryRegion vrom_alias;
     S5L8950XAicState aic;
     S5L8950XSpiState spi[S5L8950X_NUM_SPI];
 //    S5L8950XUartState uart[S5L8950X_NUM_UART];

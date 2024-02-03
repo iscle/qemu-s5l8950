@@ -56,9 +56,9 @@ static void setup_boot(MachineState *machine, size_t ram_size)
      */
     if (machine->firmware) {
         printf("Loading firmware... File: %s\n", machine->firmware);
-        hwaddr firmware_addr = s->soc.memmap[S5L8950X_DEV_SRAM];
+        hwaddr firmware_addr = s->soc.memmap[S5L8950X_DEV_VROM];
         /* load the firmware image */
-        r = load_image_targphys(machine->firmware, firmware_addr, 64 * KiB);
+        r = load_image_targphys(machine->firmware, firmware_addr, 0x00010000);
         if (r < 0) {
             error_report("Failed to load firmware from %s", machine->firmware);
             exit(1);
